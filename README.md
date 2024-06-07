@@ -1,38 +1,53 @@
+# MY TOKEN SMART CONTRACT
 
-MyToken Smart Contract
+A basic smart contract to manage a cryptocurrency token called "MyToken," allowing users to mint (create) and burn (destroy) tokens while keeping track of balances..
 
-Overview
-This smart contract creates a basic cryptocurrency token called "MyToken" with the symbol "MTK". It allows minting (creating) and burning (destroying) of tokens.
+## Description
 
-Key Components
+This project involves developing a smart contract for a cryptocurrency token named "MyToken" (symbol: MTK) using Solidity. The contract enables users to mint (create) and burn (destroy) tokens, with functionalities to adjust the total supply and individual balances accordingly. By maintaining a mapping of address balances, the contract ensures accurate tracking of token ownership. This project provides a foundational framework for managing digital assets, suitable for educational purposes, experimental projects, or as a starting point for more complex token systems..
 
-1. Token Details: 
-    “name”: The name of the token ("MyToken").
-   “symbol”: The abbreviation of the token ("MTK").
-   “totalSupply”: The total number of tokens in circulation.
+## Getting Started
+To run this program, you can use Remix, an online Solidity IDE. To get started, go to the Remix website at https://remix.ethereum.org/.
 
-2. Balances:
-    “balances”: A mapping (similar to a dictionary) that keeps track of how many tokens each address (like a user's account) has.
+Once you are on the Remix website, create a new file by clicking on the "+" icon in the left-hand sidebar. Save the file with a .sol extension (e.g., token.sol). Copy and paste the following code into the file:
 
-Functions
+    // SPDX-License-Identifier: MIT
+    pragma solidity 0.8.18;
+    contract MyToken {
+    // Public variables to store the details about the token
+    string public name = "MyToken"; // Token Name
+    string public symbol = "MTK";   // Token Abbreviation
+    uint public totalSupply;        // Total Supply Mapping to store the balance of each address
+    mapping(address => uint) public balances;
 
-1. Minting Tokens:
-    “mint(address _to, uint _amount)”: This function allows creating new tokens.
-      “_to”: The address where the new tokens will be sent.
-     “_amount”: The number of new tokens to create.
-     The function increases the “totalSupply” by “_amount” and also increases the balance of the “_to” address by “_amount”.
+    // Mint function to create new tokens
+    function mint(address _to, uint _amount) public {
+        totalSupply += _amount;        // Increase the total supply by the specified amount
+        balances[_to] += _amount;      // Increase the balance of the specified address by the specified amount
+    }
 
-2. Burning Tokens:
-    “burn(address _address, uint _amount)”: This function allows destroying tokens.
-      “_address”: The address from which the tokens will be burned.
-      “_amount”: The number of tokens to destroy.
-     The function first checks if the “_address” has enough tokens to burn (“balances[_address] >= _amount”). If true, it decreases the “totalSupply” by “_amount” and also decreases the balance of the “_address” by “_amount”.
+    // Burn function to destroy tokens
+    function burn(address _address, uint _amount) public {
+        if (balances[_address] >= _amount) {  
+            totalSupply -= _amount;      // Decrease the total supply by the specified amount
+            balances[_address] -= _amount;   // Decrease the balance of the specified address by the specified amount
+        }
+    }
+    }
 
-Example Use
 
- Minting: If we call “mint(0xABC..., 100)”, it will create 100 new tokens and add them to the balance of the address “0xABC...”.
-Burning: If we call “burn(0xABC..., 50)”, it will destroy 50 tokens from the balance of the address “0xABC...”, assuming it has at least 50 tokens.
+To compile the code, click on the "Solidity Compiler" tab in the left-hand sidebar. Make sure the "Compiler" option is set to "0.8.18" (or another compatible version), and then click on the "Compile token.sol" button.
 
-This contract provides a simple way to manage the creation and destruction of tokens, ensuring the total supply and individual balances are updated accordingly.
+Once the code is compiled, you can deploy the contract by clicking on the "Deploy & Run Transactions" tab in the left-hand sidebar. Select the "token" contract from the dropdown menu, and then click on the "Deploy" button.
+Now just call the functions name ,symbol and total supply to get the name function and total supply of amount of tokens.
 
-Author : Aditya Thakur
+To mint Tokens call mint function and copy the address and paste it under _to : section and add the amount you want to add under _ amount section then just click on transact and you can check the added amount by calling again totalsupply function.
+
+To destroy go to the burn expand it and paste the address to the _address section and amount to be burn to _burn section then just click on transact and by calling again totalsupply you can check the updated amount.
+
+
+
+
+## Authors
+
+Aditya Thakur
